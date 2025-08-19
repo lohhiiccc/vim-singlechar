@@ -4,7 +4,7 @@ vim9script noclear
 # Author:       lohhiiccc
 # Version:      1.0.0
 # License:      MIT
-# Repository:   https://github.com/lohhiiccc/vim-singlechahttps://github.com/lohhiiccc/vim-singlechar
+# Repository:   https://github.com/lohhiiccc/vim-singlechar
 # ------------------------------------------------------------------------------ #
 # Description:
 # This plugin allows you to quickly insert a single character without entering
