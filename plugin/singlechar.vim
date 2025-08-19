@@ -1,42 +1,84 @@
 vim9script noclear
-
+# ------------------------------------------------------------------------------ #
 # singlechar.vim - Insert single characters without entering insert mode
-# Author: lohhiiccc
-# Version: 0.1
+# Author:       lohhiiccc
+# Version:      1.0.0
+# License:      MIT
+# Repository:   https://github.com/lohhiiccc/vim-singlechahttps://github.com/lohhiiccc/vim-singlechar
+# ------------------------------------------------------------------------------ #
+# Description:
+# This plugin allows you to quickly insert a single character without entering
+# insert mode. Simply use the configured mapping, press the character you want
+# to insert, and continue in normal mode. Supports count for repeating characters.
+# ------------------------------------------------------------------------------ #
 
-if exists("g:loaded_singlechar") || &cp || v:version < 900
-	finish
+if exists('g:loaded_singlechar') || &cp || v:version < 900
+    finish
 endif
 g:loaded_singlechar = 1
+# ------------------------------------------------------------------------------ #
 
-# Options
+# Configuration options
+# Mapping to insert a character at cursor position (before cursor)
 if !exists('g:singlechar_map_insert_at')
-	g:singlechar_map_insert_at = '<Leader>i'
+  g:singlechar_map_insert_at = '<Leader>i'
 endif
+
+# Mapping to insert a character after cursor position
 if !exists('g:singlechar_map_insert_after')
-	g:singlechar_map_insert_after = '<Leader>a'
+  g:singlechar_map_insert_after = '<Leader>a'
 endif
 
-function InsertCharSilently(mode)
-	const char = getchar()
-	" If not <Esc>
-	redraw
-	if char != 27 
-		if a:mode == 'at'
-			execute "normal! i" .. nr2char(char) .. "\<Esc>"
-		else
-			execute "normal! a" .. nr2char(char) .. "\<Esc>"
-		endif
-	endif
-	return ''
-endfunction
+# Prompt message shown when waiting for character input
+if !exists('g:singlechar_prompt')
+    g:singlechar_prompt = 'Press the character to insert - Press Esc to cancel...'
+endif
 
-# plugin commands
-command -nargs=0 InsertCharAt InsertCharSilently('at')
-command -nargs=0 InsertCharAfter InsertCharSilently('after')
+# ------------------------------------------------------------------------------ #
+# Core functionality
 
-# Default mapping ( g:singlechar_no_mappings to toggle it off)
+# Function to handle character insertion
+# Parameters:
+#   mode:  'at' to insert before cursor, 'after' to insert after cursor
+#   count: number of times to repeat the character
+def InsertChar(mode: string, count: number): void
+    echo g:singlechar_prompt
+    
+    # Get character from user
+    var char = getchar()
+    var key = nr2char(char)
+    
+    redraw
+    if key ==# "\<Esc>"
+        return
+    endif
+    
+    # Determine whether to insert before (i) or after (a) cursor
+    var cmd = (mode ==# 'at') ? 'i' : 'a'
+    var text = repeat(key, count)
+
+    execute 'normal! ' .. cmd .. text .. "\<Esc>"
+enddef
+
+# ------------------------------------------------------------------------------ #
+# Commands and mappings
+
+# Direct command implementations
+command! -count=1 -nargs=0 InsertCharAt InsertChar('at', <count>)
+command! -count=1 -nargs=0 InsertCharAfter InsertChar('after', <count>)
+
+# Create default mappings unless disabled
 if !exists('g:singlechar_no_mappings')
-	execute "nnoremap <silent> " .. g:singlechar_map_insert_at .. " <ScriptCmd>echo InsertCharSilently('at')<CR>"
-	execute "nnoremap <silent> " .. g:singlechar_map_insert_after .. " <ScriptCmd>echo InsertCharSilently('after')<CR>"
+    execute 'nnoremap <expr> <silent> ' .. g:singlechar_map_insert_at .. ' ":<C-u>InsertCharAt " .. v:count1 .. "<CR>"' 
+    execute 'nnoremap <expr> <silent> ' .. g:singlechar_map_insert_after .. ' ":<C-u>InsertCharAfter " .. v:count1 .. "<CR>"'
 endif
+
+
+# Usage:
+# <Leader>i - Insert character at cursor position
+# <Leader>a - Insert character after cursor position
+# 
+# You can use a count before the mapping to insert multiple copies
+# of the same character. For example: 3<Leader>i will insert the
+# character 3 times at the cursor position.
+# ------------------------------------------------------------------------------ #
