@@ -46,7 +46,7 @@ g:last_singlechar_count = 1
 #   mode:  'at' to insert before cursor, 'after' to insert after cursor
 #   count: number of times to repeat the character
 #   pkey: character to insert (optional)
-export def InsertChar(mode: string, count: number, pkey: string = ''): void
+def InsertChar(mode: string, count: number, pkey: string = ''): void
 
     var key = pkey
     if pkey == ''
@@ -75,7 +75,7 @@ export def InsertChar(mode: string, count: number, pkey: string = ''): void
     legacy call repeat#set("\<Plug>(singlechar-repeat)")
 enddef
 
-export def g:RepeatSingleChar(): void
+def g:RepeatSingleChar(): void
     if g:last_singlechar_key != ''
         call InsertChar(g:last_singlechar_mode, g:last_singlechar_count, g:last_singlechar_key)
     endif
