@@ -72,7 +72,9 @@ def InsertChar(mode: string, count: number, pkey: string = ''): void
     g:last_singlechar_count = count
 
     #set vim-repeat
-    legacy call repeat#set("\<Plug>(singlechar-repeat)")
+    if exists('*repeat#set')
+        legacy call repeat#set("\<Plug>(singlechar-repeat)")
+    endif
 enddef
 
 def g:RepeatSingleChar(): void
