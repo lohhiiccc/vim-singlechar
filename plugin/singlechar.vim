@@ -37,18 +37,26 @@ endif
 # ------------------------------------------------------------------------------ #
 # Core functionality
 
+g:last_singlechar_key = ''
+g:last_singlechar_mode = ''
+g:last_singlechar_count = 1
+
 # Function to handle character insertion
 # Parameters:
 #   mode:  'at' to insert before cursor, 'after' to insert after cursor
 #   count: number of times to repeat the character
-def InsertChar(mode: string, count: number): void
-    echo g:singlechar_prompt
-    
-    # Get character from user
-    var char = getchar()
-    var key = nr2char(char)
-    
-    redraw
+#   pkey: character to insert (optional)
+export def InsertChar(mode: string, count: number, pkey: string = ''): void
+
+    var key = pkey
+    if pkey == ''
+        echo g:singlechar_prompt
+        redraw
+
+        # Get character from user
+        var char = getchar()
+        key = nr2char(char)
+    endif
     if key ==# "\<Esc>"
         return
     endif
@@ -58,10 +66,24 @@ def InsertChar(mode: string, count: number): void
     var text = repeat(key, count)
 
     execute 'normal! ' .. cmd .. text .. "\<Esc>"
+    #save
+    g:last_singlechar_key = key
+    g:last_singlechar_mode = mode
+    g:last_singlechar_count = count
+
+    #set vim-repeat
+    legacy call repeat#set("\<Plug>(singlechar-repeat)")
+enddef
+
+export def g:RepeatSingleChar(): void
+    if g:last_singlechar_key != ''
+        call InsertChar(g:last_singlechar_mode, g:last_singlechar_count, g:last_singlechar_key)
+    endif
 enddef
 
 # ------------------------------------------------------------------------------ #
-# Commands and mappings
+# Mappings <Plug>
+nnoremap <Plug>(singlechar-repeat) :call g:RepeatSingleChar()<CR>
 
 # Direct command implementations
 command! -count=1 -nargs=0 InsertCharAt InsertChar('at', <count>)
