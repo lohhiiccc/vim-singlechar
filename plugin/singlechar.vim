@@ -1,4 +1,5 @@
 vim9script noclear
+import autoload 'singlechar.vim'
 # ------------------------------------------------------------------------------ #
 # singlechar.vim - Insert single characters without entering insert mode
 # Author:       lohhiiccc
@@ -17,8 +18,8 @@ if exists('g:loaded_singlechar') || &cp || v:version < 900
 endif
 g:loaded_singlechar = 1
 # ------------------------------------------------------------------------------ #
-
 # Configuration options
+
 # Mapping to insert a character at cursor position (before cursor)
 if !exists('g:singlechar_map_insert_at')
   g:singlechar_map_insert_at = '<Leader>i'
@@ -35,68 +36,24 @@ if !exists('g:singlechar_prompt')
 endif
 
 # ------------------------------------------------------------------------------ #
-# Core functionality
-
+#
 g:last_singlechar_key = ''
 g:last_singlechar_mode = ''
 g:last_singlechar_count = 1
-
-# Function to handle character insertion
-# Parameters:
-#   mode:  'at' to insert before cursor, 'after' to insert after cursor
-#   count: number of times to repeat the character
-#   pkey: character to insert (optional)
-def InsertChar(mode: string, count: number, pkey: string = ''): void
-
-    var key = pkey
-    if pkey == ''
-        echo g:singlechar_prompt
-        redraw
-
-        # Get character from user
-        var char = getchar()
-        key = nr2char(char)
-    endif
-    if key ==# "\<Esc>"
-        return
-    endif
-    
-    # Determine whether to insert before (i) or after (a) cursor
-    var cmd = (mode ==# 'at') ? 'i' : 'a'
-    var text = repeat(key, count)
-
-    execute 'normal! ' .. cmd .. text .. "\<Esc>"
-    #save
-    g:last_singlechar_key = key
-    g:last_singlechar_mode = mode
-    g:last_singlechar_count = count
-
-    #set vim-repeat
-    if exists('*repeat#set')
-        legacy call repeat#set("\<Plug>(singlechar-repeat)")
-    endif
-enddef
-
-def g:RepeatSingleChar(): void
-    if g:last_singlechar_key != ''
-        call InsertChar(g:last_singlechar_mode, g:last_singlechar_count, g:last_singlechar_key)
-    endif
-enddef
-
+# 
 # ------------------------------------------------------------------------------ #
 # Mappings <Plug>
 nnoremap <Plug>(singlechar-repeat) :call g:RepeatSingleChar()<CR>
 
 # Direct command implementations
-command! -count=1 -nargs=0 InsertCharAt InsertChar('at', <count>)
-command! -count=1 -nargs=0 InsertCharAfter InsertChar('after', <count>)
+command! -count=1 -nargs=0 InsertCharAt singlechar.InsertChar('at', <count>)
+command! -count=1 -nargs=0 InsertCharAfter singlechar.InsertChar('after', <count>)
 
 # Create default mappings unless disabled
 if !exists('g:singlechar_no_mappings')
     execute 'nnoremap <expr> <silent> ' .. g:singlechar_map_insert_at .. ' ":<C-u>InsertCharAt " .. v:count1 .. "<CR>"' 
     execute 'nnoremap <expr> <silent> ' .. g:singlechar_map_insert_after .. ' ":<C-u>InsertCharAfter " .. v:count1 .. "<CR>"'
 endif
-
 
 # Usage:
 # <Leader>i - Insert character at cursor position
