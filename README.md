@@ -82,4 +82,4 @@ The plugin provides these commands:
 
 ## License
 
-MIT Licens
+MIT License
