@@ -1,6 +1,6 @@
 # vim-singlechar
 
-A simple Vim plugin that lets you insert single characters without leaving normal mode.
+A simple Vim plugin that lets you insert single characters (including Unicode) without leaving normal mode.
 
 ## Overview
 
@@ -8,8 +8,9 @@ A simple Vim plugin that lets you insert single characters without leaving norma
 
 ## Features
 
-- Insert characters at or after the cursor position
+- Insert characters (supports Unicode) at or after the cursor position
 - Support for counts to insert a character multiple times
+- Input validation: warns if more than one character is entered
 - Stay in normal mode for efficient editing
 - Minimal workflow interruption
 - Works with Vim 9+
@@ -71,6 +72,13 @@ let g:singlechar_prompt = 'Press the character to insert - Press Esc to cancel..
 
 " Disable default mappings (if you want to create your own)
 let g:singlechar_no_mappings = 1
+
+" Show warning if more than one character is entered (default: enabled)
+let g:singlechar_keylen_warning = 1
+
+" Customize the warning message (default: 'Only the first character will be taken: {char}')
+let g:singlechar_warning_message = 'Only the first character will be taken: {char}'
+
 ```
 
 ## Commands
