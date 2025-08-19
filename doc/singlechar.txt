@@ -34,6 +34,7 @@ REQUIREMENTS                                              *singlechar-requiremen
 
 - Vim 9.0 or newer
 - Vim compiled with `+eval` feature
+- [vim-repeat](https://github.com/tpope/vim-repeat/) (optional, for dot-repeat support)
 
 ===============================================================================
 INSTALLATION                                              *singlechar-installation*
@@ -43,6 +44,13 @@ Manual installation: >
     mkdir -p ~/.vim/pack/plugins/start/
     cp -r vim-singlechar ~/.vim/pack/plugins/start/
 <
+
+To enable dot-repeat (`.`) for character insertions, install vim-repeat: >
+    mkdir -p ~/.vim/pack/tpope/start
+    cd ~/.vim/pack/tpope/start
+    git clone https://tpope.io/vim/repeat.git
+<
+
 ===============================================================================
 USAGE                                                          *singlechar-usage*
 
@@ -60,6 +68,12 @@ You can use a count before the mapping to insert the character multiple times: >
     5<Leader>i-  " Insert 5 hyphens at cursor position
     3<Leader>a.  " Insert 3 periods after cursor position
 <
+
+Dot-repeat support (`.`):
+
+If [vim-repeat](https://github.com/tpope/vim-repeat/) is installed,
+you can use the `.` key to repeat the last single character insertion (with count and position).
+
 ===============================================================================
 COMMANDS                                                    *singlechar-commands*
 
@@ -110,10 +124,15 @@ Adding multiple periods: >
     Action: Position cursor at the end, press 3<Leader>a.
     After:  Some text...
 <
+Dot-repeat: >
+    Action: Press <Leader>i? to insert a question mark, then press . to repeat the insertion at the next location.
+<
+
 ===============================================================================
 TIPS & TRICKS                                                  *singlechar-tips*
 
 - The plugin works well with Vim's macro recording feature
+- For fast repetitive edits, use dot-repeat (`.`) if vim-repeat is installed
 
 ===============================================================================
 LICENSE                                                      *singlechar-license*
