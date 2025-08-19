@@ -54,7 +54,7 @@ g:last_singlechar_count = 1
 nnoremap <Plug>(singlechar-repeat) :call g:RepeatSingleChar()<CR>
 
 # Direct command implementations
-command! -count=1 -nargs=? InsertCharAt call singlechar.InsertChar('at', <count>, <q-args>)
+command! -count=1 -nargs=? InsertCharAt singlechar.InsertChar('at', <count>, <q-args>)
 command! -count=1 -nargs=? InsertCharAfter singlechar.InsertChar('after', <count>, <q-args>)
 
 # Create default mappings unless disabled

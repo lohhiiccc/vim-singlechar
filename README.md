@@ -10,7 +10,6 @@ A simple Vim plugin that lets you insert single characters (including Unicode) w
 
 - Insert characters (supports Unicode) at or after the cursor position
 - Support for counts to insert a character multiple times
-- Input validation: warns if more than one character is entered
 - Stay in normal mode for efficient editing
 - Minimal workflow interruption
 - Works with Vim 9+
