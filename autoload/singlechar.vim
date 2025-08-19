@@ -1,39 +1,41 @@
 vim9script noclear
- 
-# Function to handle character insertion
-# Parameters:
-#   mode:  'at' to insert before cursor, 'after' to insert after cursor
-#   count: number of times to repeat the character
-#   pkey: character to insert (optional)
-export def InsertChar(mode: string, count: number, pkey: string = ''): void
 
-    var key = pkey
-    if pkey == ''
+export def InsertChar(mode: string, count: number, input_char: string = ''): void
+    var warning_message = ''
+    var first_char = strcharpart(input_char, 0, 1)  # strcharpart for Unicode support
+
+    if input_char == ''
         echo g:singlechar_prompt
         redraw
 
         # Get character from user
         var char = getchar()
-        key = nr2char(char)
+        first_char = nr2char(char)
+    elseif g:singlechar_keylen_warning == 1 && strchars(input_char) > 1
+        warning_message = substitute(g:singlechar_warning_message, '{char}', first_char, '')
     endif
-    if key ==# "\<Esc>"
+
+    if first_char ==# "\<Esc>"
         return
     endif
-    
-    # Determine whether to insert before (i) or after (a) cursor
-    var cmd = (mode ==# 'at') ? 'i' : 'a'
-    var text = repeat(key, count)
 
-    execute 'normal! ' .. cmd .. text .. "\<Esc>"
-    #save
-    g:last_singlechar_key = key
+    # Determine whether to insert before (i) or after (a) cursor
+    var insert_command = (mode ==# 'at') ? 'i' : 'a'
+    var insert_text = repeat(first_char, (count == 0) ? 1 : count)
+
+    execute 'normal! ' .. insert_command .. insert_text .. "\<Esc>"
+    
+    # Save last used values
+    g:last_singlechar_key = first_char
     g:last_singlechar_mode = mode
     g:last_singlechar_count = count
 
-    #set vim-repeat
-    #if exists('*repeat#set')
-        legacy silent! call repeat#set("\<Plug>(singlechar-repeat)")
-    #endif
+    legacy silent! call repeat#set("\<Plug>(singlechar-repeat)")
+
+    if warning_message != ''
+        redraw!
+        echomsg warning_message
+    endif
 enddef
 
 def g:RepeatSingleChar(): void
