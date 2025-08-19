@@ -1,0 +1,143 @@
+*singlechar.txt*  Insert single characters without entering insert mode
+
+===============================================================================
+                                                                  *vim-singlechar*
+
+Author:       lohhiiccc
+Version:      1.0.0
+License:      MIT
+Last Change:  2025-08-19
+
+CONTENTS                                                     *singlechar-contents*
+
+    1. Introduction ........................... |singlechar-introduction|
+    2. Requirements ........................... |singlechar-requirements|
+    3. Installation ........................... |singlechar-installation|
+    4. Usage .................................. |singlechar-usage|
+    5. Commands ............................... |singlechar-commands|
+    6. Mappings ............................... |singlechar-mappings|
+    7. Configuration .......................... |singlechar-configuration|
+    8. Examples ............................... |singlechar-examples|
+    9. Tips & Tricks .......................... |singlechar-tips|
+   10. License ................................ |singlechar-license|
+
+===============================================================================
+INTRODUCTION                                              *singlechar-introduction*
+
+vim-singlechar is a minimalist Vim plugin designed to optimize the workflow of
+inserting single characters during editing. It eliminates the need to enter insert
+mode for simple edits like adding punctuation, which helps maintain the flow of
+normal mode operations.
+
+===============================================================================
+REQUIREMENTS                                              *singlechar-requirements*
+
+- Vim 9.0 or newer
+- Vim compiled with `+eval` feature
+
+===============================================================================
+INSTALLATION                                              *singlechar-installation*
+
+Manual installation: >
+    git clone https://github.com/lohhiiccc/vim-singlechar.git
+    mkdir -p ~/.vim/pack/plugins/start/
+    cp -r vim-singlechar ~/.vim/pack/plugins/start/
+<
+===============================================================================
+USAGE                                                          *singlechar-usage*
+
+The plugin provides a simple way to insert characters while staying in normal mode:
+
+1. Press the mapping (`<Leader>i` for inserting at cursor position, `<Leader>a` for after)
+2. When prompted, press the character you want to insert
+3. The character is inserted and you remain in normal mode
+
+To cancel, press `<Esc>` when prompted for the character.
+
+With counts:
+
+You can use a count before the mapping to insert the character multiple times: >
+    5<Leader>i-  " Insert 5 hyphens at cursor position
+    3<Leader>a.  " Insert 3 periods after cursor position
+<
+===============================================================================
+COMMANDS                                                    *singlechar-commands*
+
+The plugin provides two commands:
+
+`:InsertCharAt [count]`   - Insert a character at the cursor position
+`:InsertCharAfter [count]` - Insert a character after the cursor position
+
+The optional count parameter specifies how many times to insert the character.
+
+===============================================================================
+MAPPINGS                                                    *singlechar-mappings*
+
+By default, the plugin defines these mappings:
+
+`<Leader>i` - Map to `:InsertCharAt`
+`<Leader>a` - Map to `:InsertCharAfter`
+
+===============================================================================
+CONFIGURATION                                          *singlechar-configuration*
+
+Customizing mappings: >
+    " Must be set before the plugin is loaded
+    let g:singlechar_map_insert_at = '<Leader>i'     " Default
+    let g:singlechar_map_insert_after = '<Leader>a'  " Default
+<
+Disabling default mappings: >
+    " Disable default mappings
+    let g:singlechar_no_mappings = 1
+
+    " Create your own mappings
+    nnoremap <expr> <silent> ,i ":<C-u>InsertCharAt " .. v:count1 .. "<CR>"
+    nnoremap <expr> <silent> ,a ":<C-u>InsertCharAfter " .. v:count1 .. "<CR>"
+<
+Changing the prompt message: >
+    let g:singlechar_prompt = 'Character to insert (Esc to cancel): '
+<
+===============================================================================
+EXAMPLES                                                    *singlechar-examples*
+
+Adding commas to a list: >
+    Before: let items = [apple banana orange]
+    Action: Position the cursor on the last character of the word "apple", press <Leader>a,
+    After:  let items = [apple, banana orange]
+<
+Adding multiple periods: >
+    Before: Some text
+    Action: Position cursor at the end, press 3<Leader>a.
+    After:  Some text...
+<
+===============================================================================
+TIPS & TRICKS                                                  *singlechar-tips*
+
+- The plugin works well with Vim's macro recording feature
+
+===============================================================================
+LICENSE                                                      *singlechar-license*
+
+MIT License
+
+Copyright (c) 2025 lohhiiccc
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+ vim:tw=78:ts=8:ft=help:norl:
