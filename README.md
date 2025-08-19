@@ -13,6 +13,7 @@ A simple Vim plugin that lets you insert single characters without leaving norma
 - Stay in normal mode for efficient editing
 - Minimal workflow interruption
 - Works with Vim 9+
+- **Supports [`vim-repeat`](https://github.com/tpope/vim-repeat) for `.` repeat functionality**
 
 ## Installation
 
@@ -24,6 +25,16 @@ git clone https://github.com/lohhiiccc/vim-singlechar.git
 mkdir -p ~/.vim/pack/plugins/start/
 cp -r vim-singlechar ~/.vim/pack/plugins/start/
 cd -
+```
+
+### Optional: Install [vim-repeat](https://github.com/tpope/vim-repeat)
+
+For seamless repeat (`.`) support, install [vim-repeat](https://github.com/tpope/vim-repeat):
+
+```bash
+mkdir -p ~/.vim/pack/tpope/start
+cd ~/.vim/pack/tpope/start
+git clone https://tpope.io/vim/repeat.git
 ```
 
 ## Usage
@@ -41,6 +52,10 @@ You can use a count before the mapping to insert the character multiple times:
 
 - `3<Leader>i,` will insert three commas at the cursor position
 - `5<Leader>a.` will insert five periods after the cursor position
+
+### Repeat last insert with `.`
+
+If [vim-repeat](https://github.com/tpope/vim-repeat) is installed, you can repeat the last character insertion with `.` in normal mode.
 
 ## Configuration
 
@@ -67,4 +82,4 @@ The plugin provides these commands:
 
 ## License
 
-MIT License
+MIT Licens
