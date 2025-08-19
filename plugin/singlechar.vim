@@ -32,7 +32,15 @@ endif
 
 # Prompt message shown when waiting for character input
 if !exists('g:singlechar_prompt')
-    g:singlechar_prompt = 'Press the character to insert - Press Esc to cancel...'
+  g:singlechar_prompt = 'Press the character to insert - Press Esc to cancel...'
+endif
+
+if !exists('g:singlechar_keylen_warning')
+  g:singlechar_keylen_warning = 1
+endif
+
+if !exists('g:singlechar_warning_message')
+  g:singlechar_warning_message = 'Only the first character will be taken: {char}'
 endif
 
 # ------------------------------------------------------------------------------ #
@@ -46,8 +54,8 @@ g:last_singlechar_count = 1
 nnoremap <Plug>(singlechar-repeat) :call g:RepeatSingleChar()<CR>
 
 # Direct command implementations
-command! -count=1 -nargs=0 InsertCharAt singlechar.InsertChar('at', <count>)
-command! -count=1 -nargs=0 InsertCharAfter singlechar.InsertChar('after', <count>)
+command! -count=1 -nargs=? InsertCharAt singlechar.InsertChar('at', <count>, <q-args>)
+command! -count=1 -nargs=? InsertCharAfter singlechar.InsertChar('after', <count>, <q-args>)
 
 # Create default mappings unless disabled
 if !exists('g:singlechar_no_mappings')

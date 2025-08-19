@@ -27,7 +27,7 @@ INTRODUCTION                                              *singlechar-introducti
 vim-singlechar is a minimalist Vim plugin designed to optimize the workflow of
 inserting single characters during editing. It eliminates the need to enter insert
 mode for simple edits like adding punctuation, which helps maintain the flow of
-normal mode operations.
+normal mode operations. Now supports Unicode.
 
 ===============================================================================
 REQUIREMENTS                                              *singlechar-requirements*
@@ -110,6 +110,12 @@ Disabling default mappings: >
 <
 Changing the prompt message: >
     let g:singlechar_prompt = 'Character to insert (Esc to cancel): '
+<
+Show warning if more than one character is entered (default: enabled): >
+    let g:singlechar_keylen_warning = 1
+<
+Customize the warning message (default: 'Only the first character will be taken: {char}'): >
+    let g:singlechar_warning_message = 'Only the first character will be taken: {char}'
 <
 ===============================================================================
 EXAMPLES                                                    *singlechar-examples*
