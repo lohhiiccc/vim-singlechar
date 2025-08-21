@@ -45,7 +45,7 @@ if !exists('g:singlechar_prompt')
   g:singlechar_prompt = 'Press the character to insert - Press Esc to cancel...'
 endif
 
-#Toggle static cursor
+#Toggle off static cursor
 if !exists('g:singlechar_static_cursor')
   g:singlechar_static_cursor = 0
 endif
@@ -85,10 +85,9 @@ if !exists('g:singlechar_no_mappings')
 endif
 
 # Usage:
-# <Leader>i - Insert character at cursor position
-# <Leader>a - Insert character after cursor position
+# [count]<Leader>i - Insert character at cursor position
+# [count]<Leader>I - Insert character at begin of the line
+# [count]<Leader>a - Insert character after cursor position
+# [count]<Leader>A - Insert character at end of the line
 # 
-# You can use a count before the mapping to insert multiple copies
-# of the same character. For example: 3<Leader>i will insert the
-# character 3 times at the cursor position.
 # ------------------------------------------------------------------------------ #
