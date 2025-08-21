@@ -39,10 +39,16 @@ git clone https://tpope.io/vim/repeat.git
 
 ## Usage
 
-By default, the plugin provides two mappings:
+By default, the plugin provides four mappings:
+> [optional param]
+> (param)
 
-- `<Leader>i` - Insert a character at the cursor position
-- `<Leader>a` - Insert a character after the cursor position
+> `[count]<bind>(char)`
+
+- `[count]<Leader>i(char)` - Insert a character at the cursor position
+- `[count]<Leader>a(char)` - Insert a character after the cursor position
+- `[count]<Leader>I(char)` - Insert a character at the beginning of the line
+- `[count]<Leader>A(char)` - Insert a character at the end of the line
 
 After pressing the mapping, you'll see a prompt asking for the character to insert. Press any character and it will be inserted without entering insert mode.
 
@@ -63,8 +69,13 @@ You can customize the plugin by setting these variables in your vimrc:
 
 ```vim
 " Change the mappings (before loading the plugin)
-let g:singlechar_map_insert_at = '<Leader>i'     " Default
-let g:singlechar_map_insert_after = '<Leader>a'  " Default
+let g:singlechar_map_insert_at = '<Leader>i'    " Default
+let g:singlechar_map_insert_after = '<Leader>a' " Default
+let g:singlechar_map_insert_begin = '<Leader>I' " Default
+let g:singlechar_map_insert_end = '<Leader>A'   " Default
+
+" Set the static cursor (no cursor move during singlechar actions)
+let g:singlechar_static_cursor = 1
 
 " Change the prompt message
 let g:singlechar_prompt = 'Press the character to insert - Press Esc to cancel...'  " Default
@@ -84,9 +95,14 @@ let g:singlechar_warning_message = 'Only the first character will be taken: {cha
 
 The plugin provides these commands:
 
-- `:InsertCharAt [count]` - Insert a character at the cursor position
-- `:InsertCharAfter [count]` - Insert a character after the cursor position
+> [optional param]
+> (param)
+
+- `:InsertCharAt (count) [char]` - Insert a character at the cursor position
+- `:InsertCharAfter (count) [char]` - Insert a character after the cursor position
+- `:InsertCharBegin (count) [char]` - Insert a character at the beginning of the line
+- `:InsertCharEnd (count) [char]` - Insert a character at the end of the line
 
 ## License
 
-MIT License
+[MIT License](https://github.com/lohhiiccc/vim-singlechar/blob/main/LICENSE)
