@@ -50,7 +50,7 @@ if !exists('g:singlechar_static_cursor')
   g:singlechar_static_cursor = 0
 endif
 
-# toggle warnign
+# toggle warning
 if !exists('g:singlechar_keylen_warning')
   g:singlechar_keylen_warning = 1
 endif
