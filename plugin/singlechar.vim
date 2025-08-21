@@ -45,7 +45,7 @@ if !exists('g:singlechar_prompt')
   g:singlechar_prompt = 'Press the character to insert - Press Esc to cancel...'
 endif
 
-#Toggle off static cursor
+# Enable/disable static cursor feature
 if !exists('g:singlechar_static_cursor')
   g:singlechar_static_cursor = 0
 endif
