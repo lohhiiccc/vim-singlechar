@@ -6,7 +6,7 @@
 Author:       lohhiiccc
 Version:      1.0.0
 License:      MIT
-Last Change:  2025-08-19
+Last Change:  2025-08-21
 
 CONTENTS                                                     *singlechar-contents*
 
@@ -79,8 +79,10 @@ COMMANDS                                                    *singlechar-commands
 
 The plugin provides two commands:
 
-`:InsertCharAt [count]`   - Insert a character at the cursor position
-`:InsertCharAfter [count]` - Insert a character after the cursor position
+`:InsertCharAt [count] [char]`    - Insert a character at the cursor position
+`:InsertCharAfter [count] [char]` - Insert a character after the cursor position
+`:InsertCharBegin [count] [char]` - Insert a character at the beginning of the line
+`:InsertCharEnd [count] [char]`   - Insert a character at the end of the line
 
 The optional count parameter specifies how many times to insert the character.
 
@@ -89,8 +91,10 @@ MAPPINGS                                                    *singlechar-mappings
 
 By default, the plugin defines these mappings:
 
-`<Leader>i` - Map to `:InsertCharAt`
-`<Leader>a` - Map to `:InsertCharAfter`
+`[count]<Leader>i` - Map to `:InsertCharAt [count]`
+`[count]<Leader>a` - Map to `:InsertCharAfter [count]`
+`[count]<Leader>I` - Map to `:InsertCharBegin [count]`
+`[count]<Leader>A` - Map to `:InsertCharEnd [count]`
 
 ===============================================================================
 CONFIGURATION                                          *singlechar-configuration*
@@ -99,6 +103,8 @@ Customizing mappings: >
     " Must be set before the plugin is loaded
     let g:singlechar_map_insert_at = '<Leader>i'     " Default
     let g:singlechar_map_insert_after = '<Leader>a'  " Default
+    let g:singlechar_map_insert_begin = '<Leader>I'  " Default
+    let g:singlechar_map_insert_end = '<Leader>A'  " Default
 <
 Disabling default mappings: >
     " Disable default mappings
@@ -107,7 +113,13 @@ Disabling default mappings: >
     " Create your own mappings
     nnoremap <expr> <silent> ,i ":<C-u>InsertCharAt " .. v:count1 .. "<CR>"
     nnoremap <expr> <silent> ,a ":<C-u>InsertCharAfter " .. v:count1 .. "<CR>"
+    nnoremap <expr> <silent> ,I ":<C-u>InsertCharBegin " .. v:count1 .. "<CR>"
+    nnoremap <expr> <silent> ,A ":<C-u>InsertCharEnd " .. v:count1 .. "<CR>"
 <
+Set static cursor option: >
+    " When enabled, cursor returns to its original position after insertion
+    let g:singlechar_static_cursor = 1
+
 Changing the prompt message: >
     let g:singlechar_prompt = 'Character to insert (Esc to cancel): '
 <
