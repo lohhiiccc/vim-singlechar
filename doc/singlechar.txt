@@ -27,13 +27,12 @@ INTRODUCTION                                              *singlechar-introducti
 vim-singlechar is a minimalist Vim plugin designed to optimize the workflow of
 inserting single characters during editing. It eliminates the need to enter insert
 mode for simple edits like adding punctuation, which helps maintain the flow of
-normal mode operations. Now supports Unicode.
+normal mode operations. It also supports Unicode.
 
 ===============================================================================
 REQUIREMENTS                                              *singlechar-requirements*
 
 - Vim 9.0 or newer
-- Vim compiled with `+eval` feature
 - [vim-repeat](https://github.com/tpope/vim-repeat/) (optional, for dot-repeat support)
 
 ===============================================================================
@@ -43,7 +42,6 @@ Manual installation: >
     git clone https://github.com/lohhiiccc/vim-singlechar.git
     mkdir -p ~/.vim/pack/plugins/start/
     cp -r vim-singlechar ~/.vim/pack/plugins/start/
-<
 
 To enable dot-repeat (`.`) for character insertions, install vim-repeat: >
     mkdir -p ~/.vim/pack/tpope/start
@@ -56,9 +54,12 @@ USAGE                                                          *singlechar-usage
 
 The plugin provides a simple way to insert characters while staying in normal mode:
 
-1. Press the mapping (`<Leader>i` for inserting at cursor position, `<Leader>a` for after)
+1. Press the mapping (`<Leader>i` for inserting at cursor position, `<Leader>a` for after,
+   `<Leader>I` for inserting at the first non-whitespace character,  
+   `<Leader>A` for inserting at the end of the line)
 2. When prompted, press the character you want to insert
 3. The character is inserted and you remain in normal mode
+4. If g:singlechar_static_cursor is set to 1, your cursor will not be moved
 
 To cancel, press `<Esc>` when prompted for the character.
 
@@ -79,10 +80,10 @@ COMMANDS                                                    *singlechar-commands
 
 The plugin provides two commands:
 
-`:InsertCharAt [count] [char]`    - Insert a character at the cursor position
+`:InsertCharAt    [count] [char]` - Insert a character at the cursor position
 `:InsertCharAfter [count] [char]` - Insert a character after the cursor position
 `:InsertCharBegin [count] [char]` - Insert a character at the beginning of the line
-`:InsertCharEnd [count] [char]`   - Insert a character at the end of the line
+`:InsertCharEnd   [count] [char]` - Insert a character at the end of the line
 
 The optional count parameter specifies how many times to insert the character.
 
@@ -91,20 +92,20 @@ MAPPINGS                                                    *singlechar-mappings
 
 By default, the plugin defines these mappings:
 
-`[count]<Leader>i` - Map to `:InsertCharAt [count]`
+`[count]<Leader>i` - Map to `:InsertCharAt    [count]`
 `[count]<Leader>a` - Map to `:InsertCharAfter [count]`
 `[count]<Leader>I` - Map to `:InsertCharBegin [count]`
-`[count]<Leader>A` - Map to `:InsertCharEnd [count]`
+`[count]<Leader>A` - Map to `:InsertCharEnd   [count]`
 
 ===============================================================================
 CONFIGURATION                                          *singlechar-configuration*
 
 Customizing mappings: >
     " Must be set before the plugin is loaded
-    let g:singlechar_map_insert_at = '<Leader>i'     " Default
+    let g:singlechar_map_insert_at    = '<Leader>i'  " Default
     let g:singlechar_map_insert_after = '<Leader>a'  " Default
     let g:singlechar_map_insert_begin = '<Leader>I'  " Default
-    let g:singlechar_map_insert_end = '<Leader>A'  " Default
+    let g:singlechar_map_insert_end   = '<Leader>A'  " Default
 <
 Disabling default mappings: >
     " Disable default mappings
@@ -126,7 +127,7 @@ Changing the prompt message: >
 Show warning if more than one character is entered (default: enabled): >
     let g:singlechar_keylen_warning = 1
 <
-Customize the warning message (default: 'Only the first character will be taken: {char}'): >
+Customize the warning message: >
     let g:singlechar_warning_message = 'Only the first character will be taken: {char}'
 <
 ===============================================================================
@@ -150,6 +151,7 @@ Dot-repeat: >
 TIPS & TRICKS                                                  *singlechar-tips*
 
 - The plugin works well with Vim's macro recording feature
+- `<Leader>A` is very useful for adding forgotten semicolons
 - For fast repetitive edits, use dot-repeat (`.`) if vim-repeat is installed
 
 ===============================================================================

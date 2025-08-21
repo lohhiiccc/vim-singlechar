@@ -40,10 +40,7 @@ git clone https://tpope.io/vim/repeat.git
 ## Usage
 
 By default, the plugin provides four mappings:
-> [optional param]
-> (param)
-
-> `[count]<bind>(char)`
+> [optional param] (param)
 
 - `[count]<Leader>i(char)` - Insert a character at the cursor position
 - `[count]<Leader>a(char)` - Insert a character after the cursor position
@@ -69,13 +66,13 @@ You can customize the plugin by setting these variables in your vimrc:
 
 ```vim
 " Change the mappings (before loading the plugin)
-let g:singlechar_map_insert_at = '<Leader>i'    " Default
-let g:singlechar_map_insert_after = '<Leader>a' " Default
-let g:singlechar_map_insert_begin = '<Leader>I' " Default
-let g:singlechar_map_insert_end = '<Leader>A'   " Default
+let g:singlechar_map_insert_at    = '<Leader>i'   " Default
+let g:singlechar_map_insert_after = '<Leader>a'   " Default
+let g:singlechar_map_insert_begin = '<Leader>I'   " Default
+let g:singlechar_map_insert_end   = '<Leader>A'   " Default
 
 " Set the static cursor (no cursor move during singlechar actions)
-let g:singlechar_static_cursor = 1
+let g:singlechar_static_cursor = 1 " Deafault = 0
 
 " Change the prompt message
 let g:singlechar_prompt = 'Press the character to insert - Press Esc to cancel...'  " Default
@@ -83,11 +80,11 @@ let g:singlechar_prompt = 'Press the character to insert - Press Esc to cancel..
 " Disable default mappings (if you want to create your own)
 let g:singlechar_no_mappings = 1
 
-" Show warning if more than one character is entered (default: enabled)
-let g:singlechar_keylen_warning = 1
+" Show warning if more than one character is entered
+let g:singlechar_keylen_warning = 1 " Default
 
-" Customize the warning message (default: 'Only the first character will be taken: {char}')
-let g:singlechar_warning_message = 'Only the first character will be taken: {char}'
+" Customize the warning message
+let g:singlechar_warning_message = 'Only the first character will be taken: {char}' " Default
 
 ```
 
@@ -95,13 +92,12 @@ let g:singlechar_warning_message = 'Only the first character will be taken: {cha
 
 The plugin provides these commands:
 
-> [optional param]
-> (param)
+> [optional param] (param)
 
-- `:InsertCharAt (count) [char]` - Insert a character at the cursor position
+- `:InsertCharAt    (count) [char]` - Insert a character at the cursor position
 - `:InsertCharAfter (count) [char]` - Insert a character after the cursor position
 - `:InsertCharBegin (count) [char]` - Insert a character at the beginning of the line
-- `:InsertCharEnd (count) [char]` - Insert a character at the end of the line
+- `:InsertCharEnd   (count) [char]` - Insert a character at the end of the line
 
 ## License
 
