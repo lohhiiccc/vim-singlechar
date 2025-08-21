@@ -19,11 +19,10 @@ export def InsertChar(mode: string, count: number, input_char: string = ''): voi
         return
     endif
 
-    # Determine whether to insert before (i) or after (a) cursor
-    var insert_command = (mode ==# 'at') ? 'i' : 'a'
+    var insert_command = GetInsertCommand(mode)
     var insert_text = repeat(first_char, (count == 0) ? 1 : count)
 
-    execute 'normal! ' .. insert_command .. insert_text .. "\<Esc>"
+    DoSingleChar(insert_command, insert_text, g:singlechar_static_cursor)
     
     # Save last used values
     g:last_singlechar_key = first_char
@@ -35,6 +34,31 @@ export def InsertChar(mode: string, count: number, input_char: string = ''): voi
     if warning_message != ''
         redraw!
         echomsg warning_message
+    endif
+enddef
+
+def GetInsertCommand(mode: string): string
+    if mode ==# 'at'
+        return 'i'
+    elseif mode ==# 'after'
+        return 'a'
+    elseif mode ==# 'begin'
+        return 'I'
+    elseif mode ==# 'end'
+        return 'A'
+    else
+        return 'i'
+    endif
+enddef
+
+def DoSingleChar(command: string, text: string, resetCursor: number): void
+    var pos = getpos('.')
+    execute 'normal! ' .. command .. text .. "\<Esc>"
+    if resetCursor == 1
+        if (command ==# 'i')
+            pos[2] = pos[2] + 1
+        endif
+        setpos('.', pos)
     endif
 enddef
 

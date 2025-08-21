@@ -30,15 +30,32 @@ if !exists('g:singlechar_map_insert_after')
   g:singlechar_map_insert_after = '<Leader>a'
 endif
 
+# Mapping to insert a character at the endline
+if !exists('g:singlechar_map_insert_end')
+  g:singlechar_map_insert_end = '<Leader>A'
+endif
+
+# Mapping to insert a character at the startline
+if !exists('g:singlechar_map_insert_begin')
+  g:singlechar_map_insert_begin = '<Leader>I'
+endif
+
 # Prompt message shown when waiting for character input
 if !exists('g:singlechar_prompt')
   g:singlechar_prompt = 'Press the character to insert - Press Esc to cancel...'
 endif
 
+#Toggle static cursor
+if !exists('g:singlechar_static_cursor')
+  g:singlechar_static_cursor = 0
+endif
+
+# toggle warnign
 if !exists('g:singlechar_keylen_warning')
   g:singlechar_keylen_warning = 1
 endif
 
+# warning message
 if !exists('g:singlechar_warning_message')
   g:singlechar_warning_message = 'Only the first character will be taken: {char}'
 endif
@@ -54,6 +71,8 @@ g:last_singlechar_count = 1
 nnoremap <Plug>(singlechar-repeat) :call g:RepeatSingleChar()<CR>
 
 # Direct command implementations
+command! -count=1 -nargs=? InsertCharBegin singlechar.InsertChar('begin', <count>, <q-args>)
+command! -count=1 -nargs=? InsertCharEnd singlechar.InsertChar('end', <count>, <q-args>)
 command! -count=1 -nargs=? InsertCharAt singlechar.InsertChar('at', <count>, <q-args>)
 command! -count=1 -nargs=? InsertCharAfter singlechar.InsertChar('after', <count>, <q-args>)
 
@@ -61,6 +80,8 @@ command! -count=1 -nargs=? InsertCharAfter singlechar.InsertChar('after', <count
 if !exists('g:singlechar_no_mappings')
     execute 'nnoremap <expr> <silent> ' .. g:singlechar_map_insert_at .. ' ":<C-u>InsertCharAt " .. v:count1 .. "<CR>"' 
     execute 'nnoremap <expr> <silent> ' .. g:singlechar_map_insert_after .. ' ":<C-u>InsertCharAfter " .. v:count1 .. "<CR>"'
+    execute 'nnoremap <expr> <silent> ' .. g:singlechar_map_insert_begin .. ' ":<C-u>InsertCharBegin " .. v:count1 .. "<CR>"'
+    execute 'nnoremap <expr> <silent> ' .. g:singlechar_map_insert_end .. ' ":<C-u>InsertCharEnd " .. v:count1 .. "<CR>"'
 endif
 
 # Usage:
